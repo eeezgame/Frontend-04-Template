@@ -1,0 +1,9 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "local-server":"http-server -c-1"
+  }
+}
