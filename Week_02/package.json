@@ -1,0 +1,19 @@
+{
+  "name": "Week_02",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "lesson-1":"node lesson-1",
+    "lesson-2":"node lesson-2",
+    "lesson-3":"node lesson-3",
+    "lesson-4":"node lesson-4",
+    "lesson-5":"node lesson-5",
+    "lesson-6":"node lesson-6",
+    "lesson-7":"node lesson-7",
+    "lesson-8":"node lesson-8",
+    "lesson-9":"node lesson-9",
+    "lesson-10":"node lesson-10",
+    "lesson-11":"node lesson-11"
+  }
+}
