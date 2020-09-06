@@ -60,9 +60,12 @@
     document.addEventListener('contextmenu', e => e.preventDefault())
 
     async function findPath (map, start, end) {
-      const queue = new Sorted([])
+      const queue = new Sorted([],distance)
       const table = Object.create(map)
       insert(start[0], start[1], null)
+      function distance (point) {
+        return (point[0] - end[0]) ** 2 + (point[1] - end[1]) ** 2
+      }
       async function insert(row, col, pre) {
         if (row < 0 || row >= 100 || col < 0 || col >= 100) return
         if (table[getPoint(row, col)] || table[getPoint(row, col)] === null) return
