@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        #dragable {
+          display: inline-block;
+          width: 100px;
+          height: 100px;
+          background-color: pink;
+        }
+      </style>
+      <div id="container">
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+      </div>
+      <div id="dragable"></div>
+      
+      <script>
+        const el = document.getElementById('dragable');
+        let baseX = 0, baseY = 0
+
+        el.addEventListener('mousedown', e => {
+            let startX = e.clientX, startY = e.clientY;
+        
+            function move (e) {
+                const range = getNearest(e.clientX,  e.clientY)
+                range.insertNode(el)
+            }
+        
+            function up (e) {
+                baseX = baseX + e.clientX - startX
+                baseY = baseY + e.clientY - startY
+        
+                document.removeEventListener('mousemove', move)
+                document.removeEventListener('mouseup', up)
+            }
+        
+            document.addEventListener('mousemove', move)
+            document.addEventListener('mouseup', up)
+            document.addEventListener('selectstart', e => e.preventDefault())
+        })
+
+
+        const container = document.getElementById('container')
+        const ranges = []
+        container.childNodes[0].textContent.split('').map((text, i) => {
+            const range = document.createRange()
+            range.setStart(container.childNodes[0], i)
+            range.setEnd(container.childNodes[0], i)
+            ranges.push(range)
+        })
+
+        function getNearest (x, y) {
+            let min = Infinity
+            let nearest = null
+            for(let range of ranges){
+                const rect = range.getBoundingClientRect()
+                const d = distance(x - rect.x, y - rect.y)
+                if(d < min){
+                    nearest = range
+                    min = d
+                }
+            }
+            return nearest
+        }
+
+        function distance (x, y) {
+            return x ** 2 + y ** 2
+        }
+      </script>
+</body>
+</html>
