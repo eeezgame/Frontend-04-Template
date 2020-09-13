@@ -8,7 +8,8 @@ function effect(fn) {
     currentEffect = null;
 }
 function reactive(object) {
-    // if (reactivities.has(object)) return reactivities.get(object)
+    if (reactivities.has(object))
+        return reactivities.get(object);
     var observed = new Proxy(object, {
         get: function (object, propety) {
             if (currentEffect) {
@@ -29,7 +30,7 @@ function reactive(object) {
             return true;
         }
     });
-    // reactivities.set(object, observed)
+    reactivities.set(object, observed);
     return observed;
 }
 if (typeof window !== 'undefined' && window.effect) {
