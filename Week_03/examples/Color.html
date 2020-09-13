@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../dist/Reactive/index.js"></script>
+</head>
+<body>
+    <div>
+        <input id='r' type="range" min="0" max="255" />
+    </div>
+    <div>
+        <input id='g' type="range" min="0" max="255" />
+    </div>
+    <div>
+        <input id='b' type="range" min="0" max="255" />
+    </div>
+    <span id="value"></span>
+    <script>
+        let color = reactive({
+            r: 0,
+            g: 0,
+            b: 0
+        })
+        const el = {
+            r: document.getElementById('r'),
+            g: document.getElementById('g'),
+            b: document.getElementById('b'),
+            value: document.getElementById('value'),
+        }
+        effect(() => {
+            el.r.value = color.r
+        })
+        effect(() => {
+            el.g.value = color.g
+        })
+        effect(() => {
+            el.b.value = color.b
+        })
+
+        effect(() => {
+            el.value.innerText = `rgb: ${color.r} ${color.g} ${color.b}`
+            el.value.style.color = `rgb(${color.r} ${color.g} ${color.b})`
+        })
+        el.r.addEventListener('input', e => color.r = e.target.value)
+        el.g.addEventListener('input', e => color.g = e.target.value)
+        el.b.addEventListener('input', e => color.b = e.target.value)
+    </script>
+</body>
+</html>
