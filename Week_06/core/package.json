@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "server": "node server.js",
-    "client": "node client.js"
+    "client": "node client.js",
+    "client2": "node client2.js"
   }
 }
